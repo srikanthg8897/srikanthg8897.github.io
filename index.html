@@ -5,22 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Srikanth Garimella Portfolio</title>
     <style>
-        /* === Reset & Base === */
+        /* ===== Reset & Base ===== */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #121212; color: #e0e0e0; line-height: 1.6; }
         a { color: #1e90ff; text-decoration: none; }
         a:hover { text-decoration: underline; }
+        ul { list-style: none; }
 
-        /* === Layout === */
+        /* ===== Top Bar ===== */
+        .topbar {
+            position: sticky;
+            top: 0;
+            background-color: #000;
+            color: #1e3a8a; /* Dark Blue */
+            font-weight: bold;
+            padding: 15px 20px;
+            font-size: 1.5em;
+            z-index: 1000;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+
+        /* ===== Layout ===== */
         .container { display: flex; min-height: 100vh; }
-        .sidebar { width: 250px; background-color: #1f1f1f; padding: 20px; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+        .sidebar {
+            width: 250px;
+            background-color: #1f1f1f;
+            padding: 20px;
+            position: sticky;
+            top: 60px; /* height of topbar */
+            height: calc(100vh - 60px);
+            overflow-y: auto;
+        }
         .sidebar h2 { margin-bottom: 20px; color: #1e90ff; text-align: center; }
-        .sidebar nav a { display: block; margin: 10px 0; padding: 8px; border-radius: 5px; transition: background 0.3s; }
-        .sidebar nav a:hover { background-color: #272727; }
+        .sidebar nav a, .sidebar nav button {
+            display: block;
+            width: 100%;
+            margin: 5px 0;
+            padding: 8px;
+            border-radius: 5px;
+            background: none;
+            border: none;
+            color: #e0e0e0;
+            text-align: left;
+            cursor: pointer;
+            font-size: 0.95em;
+        }
+        .sidebar nav a:hover, .sidebar nav button:hover { background-color: #272727; }
 
         .content { flex: 1; padding: 40px; overflow-y: auto; }
 
-        /* === Sections === */
+        /* ===== Sections ===== */
         section { margin-bottom: 50px; }
         h1, h2, h3 { color: #1e90ff; margin-bottom: 15px; }
         h1 { font-size: 2.2em; }
@@ -29,108 +64,116 @@
         p { margin-bottom: 10px; }
 
         .contact { margin: 10px 0 20px 0; font-size: 0.95em; color: #aaaaaa; }
-        .experience, .education, .certifications { background-color: #1a1a1a; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
-        .job-title { font-weight: bold; color: #1e90ff; }
-        .job-duration { font-style: italic; font-size: 0.9em; color: #bbbbbb; }
-        .tools { font-size: 0.9em; color: #aaaaaa; margin-top: 5px; }
+        .experience-detail { background-color: #1a1a1a; padding: 15px; border-radius: 8px; margin-bottom: 10px; display: none; }
 
-        /* === Smooth Scroll === */
+        /* Smooth Scroll */
         html { scroll-behavior: smooth; }
+
+        /* Expand/Collapse Animation */
+        .collapse { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+        .collapse.show { max-height: 1000px; transition: max-height 0.6s ease; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <!-- Sidebar Menu -->
-    <div class="sidebar">
-        <h2>Srikanth Garimella</h2>
-        <nav>
-            <a href="#about">About Me</a>
-            <a href="#experience">Experience</a>
-            <a href="#education">Education</a>
-            <a href="#certifications">Certifications</a>
-            <a href="#portfolio">Portfolio/Links</a>
-        </nav>
+    <!-- Top Bar -->
+    <div class="topbar">Srikanth Garimella</div>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Menu</h2>
+            <nav>
+                <a href="#about">About Me</a>
+                <button onclick="toggleCollapse('exp-carel')">CARELON Behavioral Health</button>
+                <div id="exp-carel" class="collapse">
+                    <ul>
+                        <li>Senior Lead Developer (05/2024 – Present)</li>
+                        <li>Led modernization of .NET applications to .NET 8 improving performance by 30%</li>
+                        <li>Implemented CI/CD pipelines in Azure DevOps and Jenkins</li>
+                        <li>Oversaw code reviews and enforced SOLID principles</li>
+                    </ul>
+                </div>
+
+                <button onclick="toggleCollapse('exp-apollo')">Apollo Athene</button>
+                <div id="exp-apollo" class="collapse">
+                    <ul>
+                        <li>Senior Lead Developer (10/2023 – 04/2024)</li>
+                        <li>Developed RESTful APIs with OAuth2 security</li>
+                        <li>Implemented microservices using Kafka</li>
+                        <li>Configured CI/CD pipelines and version control</li>
+                    </ul>
+                </div>
+
+                <button onclick="toggleCollapse('exp-elevance')">Elevance Health</button>
+                <div id="exp-elevance" class="collapse">
+                    <ul>
+                        <li>Solution Architect (12/2022 – 09/2023)</li>
+                        <li>Designed WPF UIs using XAML and MVVM</li>
+                        <li>Developed microservices with event-driven architecture</li>
+                        <li>Applied TDD methodologies to ensure high-quality code</li>
+                    </ul>
+                </div>
+
+                <a href="#education">Education</a>
+                <a href="#certifications">Certifications</a>
+                <a href="#portfolio">Portfolio/Links</a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <!-- About Me -->
+            <section id="about">
+                <h1>About Me</h1>
+                <p class="contact">Garimella.Srikanth88@gmail.com | +1-732-642-7879</p>
+                <p>
+                    I am a seasoned software professional with over 14 years of experience in full-stack development, architecture, and leadership. 
+                    I have successfully led cross-functional teams, managed complex projects, and delivered high-quality software solutions across multiple industries including healthcare, finance, and enterprise software. 
+                    My expertise spans backend development with .NET technologies, frontend development with HTML, CSS, JavaScript, and modern frameworks like ReactJS and Blazor. 
+                    I am passionate about scalable software design, microservices architecture, cloud deployments, CI/CD automation, and integrating Generative AI to optimize solutions. 
+                    I thrive on mentoring teams, driving modernization initiatives, and delivering tangible business value through technology innovation.
+                </p>
+            </section>
+
+            <!-- Experience Section -->
+            <section id="experience">
+                <h2>Experience</h2>
+                <p>Use the left menu to explore details for each company.</p>
+            </section>
+
+            <!-- Education -->
+            <section id="education">
+                <h2>Education</h2>
+                <p><strong>International Institute of Information Technology | Bengaluru, India</strong> – Post Graduate Diploma in IT (08/2010)</p>
+                <p><strong>JNTU | Hyderabad, India</strong> – Bachelor of Engineering in ECE (04/2009)</p>
+            </section>
+
+            <!-- Certifications -->
+            <section id="certifications">
+                <h2>Certifications</h2>
+                <p>Generative AI Foundations Certificate Program – upGrad & Microsoft (August 2025)</p>
+                <p>ITIL@2011, Silver Award (2012), Bronze Award (2019), Appreciation (2020), Promotion to Lead Developer (2022)</p>
+            </section>
+
+            <!-- Portfolio / Links -->
+            <section id="portfolio">
+                <h2>Portfolio & Profiles</h2>
+                <ul>
+                    <li><a href="https://www.linkedin.com/in/srikanth-garimella-6b0b372b/" target="_blank">LinkedIn</a></li>
+                    <li>Email: Garimella.Srikanth88@gmail.com</li>
+                    <li>Phone: +1-732-642-7879</li>
+                </ul>
+            </section>
+        </div>
     </div>
 
-    <!-- Main Content -->
-    <div class="content">
-        <!-- About Me -->
-        <section id="about">
-            <h1>About Me</h1>
-            <p class="contact">Garimella.Srikanth88@gmail.com | +1-732-642-7879</p>
-            <p>
-            I am a seasoned software professional with over 14 years of experience in full-stack development, architecture, and leadership. 
-            I have successfully led cross-functional teams, managed complex projects, and delivered high-quality software solutions across multiple industries including healthcare, finance, and enterprise software. 
-            My expertise spans backend development with .NET technologies, frontend development with HTML, CSS, JavaScript, and modern frameworks like ReactJS and Blazor. 
-            I am passionate about scalable software design, microservices architecture, cloud deployments, CI/CD automation, and integrating Generative AI to optimize solutions. 
-            I thrive on mentoring teams, driving modernization initiatives, and delivering tangible business value through technology innovation.
-            </p>
-        </section>
-
-        <!-- Experience -->
-        <section id="experience">
-            <h2>Experience</h2>
-
-            <!-- CARELON -->
-            <div class="experience">
-                <div class="job-title">Senior Lead Developer - CARELON Behavioral Health (Dallas, TX) [Remote]</div>
-                <div class="job-duration">05/2024 – Present</div>
-                <ul>
-                    <li>Led modernization of legacy .NET applications to .NET 8, improving performance by 30%.</li>
-                    <li>Implemented CI/CD pipelines in Azure DevOps and Jenkins, streamlining deployments.</li>
-                    <li>Oversaw code reviews, enforced SOLID principles, and performed root cause analysis for incidents.</li>
-                    <li>Designed plug-in architecture for modular feature upgrades.</li>
-                </ul>
-                <div class="tools">Visual Studio 2022, C#, SQL Server 2018, Entity Framework Core 6, WinForms</div>
-            </div>
-
-            <!-- APOLLO ATHENE -->
-            <div class="experience">
-                <div class="job-title">Senior Lead Developer - Apollo Athene (Los Angeles, CA) [Hybrid]</div>
-                <div class="job-duration">10/2023 – 04/2024</div>
-                <ul>
-                    <li>Developed and consumed RESTful APIs with OAuth2 security.</li>
-                    <li>Implemented microservices using event-driven architecture and Kafka.</li>
-                    <li>Configured pipelines for CI/CD, integrated version control, and implemented repository pattern.</li>
-                    <li>Led development in Scrum Agile sprints, managing client requirements and sprint deliverables.</li>
-                </ul>
-                <div class="tools">Visual Studio 2022, C#, SQL Server 2014, SSRS, TIDAL</div>
-            </div>
-
-            <!-- ELEVANCE HEALTH -->
-            <div class="experience">
-                <div class="job-title">Solution Architect - Elevance Health (Parlin, NJ) [Remote]</div>
-                <div class="job-duration">12/2022 – 09/2023</div>
-                <ul>
-                    <li>Designed responsive WPF user interfaces using XAML and MVVM architecture.</li>
-                    <li>Developed custom controls and applied advanced data binding techniques.</li>
-                    <li>Implemented TDD methodologies to ensure high-quality code.</li>
-                    <li>Developed microservices using event-driven architecture and RESTful APIs with OAuth 2.0.</li>
-                </ul>
-                <div class="tools">Visual Studio 2022, SQL Server 2018, WPF, C#, Oracle Toad</div>
-            </div>
-
-            <!-- You can continue adding other experiences similarly -->
-        </section>
-
-        <!-- Education -->
-        <section id="education">
-            <h2>Education</h2>
-            <div class="education">
-                <p><strong>International Institute of Information Technology | Bengaluru, India</strong> – Post Graduate Diploma in Information Technology (08/2010)</p>
-                <p><strong>JNTU | Hyderabad, India</strong> – Bachelor of Engineering in ECE (Electronics and Communication Engineering) (04/2009)</p>
-            </div>
-        </section>
-
-        <!-- Certifications -->
-        <section id="certifications">
-            <h2>Certifications</h2>
-            <div class="certifications">
-                <p>Generative AI Foundations Certificate Program – upGrad & Microsoft (August 2025)</p>
-                <p>Modules: Prompt Engineering, AI-Powered Research, Content Generation, Problem-Solving, Automation, and Technical Presentation</p>
-                <p>ITIL@2011, Silver Award (2012), Bronze Award (2019), Appreciation (2020), Promotion to Lead Developer (2022)</p>
-            </div>
-        </section>
-
-        <!-- Portfolio / Links
+    <script>
+        // Function to expand/collapse experience details
+        function toggleCollapse(id) {
+            const el = document.getElementById(id);
+            el.classList.toggle('show');
+        }
+    </script>
+</body>
+</html>
