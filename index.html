@@ -138,46 +138,72 @@
   .bullets li { margin-bottom: 8px; color: #B0B0B0; }
 
   /* ===== Responsive ===== */
-  /* ===== Mobile Sidebar ===== */
+ /* Mobile Hamburger Toggle below Topbar */
+#menuToggle {
+  display: none; /* hide on desktop */
+}
+
 @media (max-width: 880px) {
-    .container { flex-direction: row; } /* keep sidebar on left */
 
-    /* Sidebar: start collapsed */
-    .sidebar {
-        width: 0;
-        min-width: 0;
-        overflow: hidden;
-        transition: width 0.3s ease;
-        position: relative; /* relative so it pushes content */
-        height: calc(100vh - 56px);
-        top: 0;
-        padding: 0 12px; /* padding will expand with width */
-    }
+  /* Hamburger button */
+  #menuToggle {
+    display: block;
+    background: #00BFA5; /* teal background */
+    color: #0D1B2A;      /* text/icon color */
+    border: none;
+    font-size: 1.8rem;
+    padding: 6px 12px;
+    margin: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    z-index: 1100;
+    position: relative; /* below topbar */
+  }
 
-    .sidebar.active {
-        width: 250px; /* same as desktop width */
-        padding: 18px;
-    }
+  /* Container stays column */
+  .container {
+    flex-direction: column;
+    position: relative;
+  }
 
-    .content {
-        transition: margin-left 0.3s ease;
-        margin-left: 0;
-    }
+  /* Sidebar for mobile overlay */
+  .sidebar {
+    position: fixed; /* overlay on top of content */
+    top: 56px; /* below topbar */
+    left: 0;
+    width: 70%; /* adjust as needed */
+    height: calc(100vh - 56px);
+    background: linear-gradient(180deg, #073B4C, #005F73);
+    padding: 12px;
+    display: none; /* hidden initially */
+    z-index: 1050;
+    overflow-y: auto;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.5);
+  }
 
-    .content.shifted {
-        margin-left: 250px; /* push content when sidebar is open */
-    }
+  .sidebar.active {
+    display: block;
+  }
 
-    /* Hamburger button below topbar */
-    #menuToggle {
-        display: block;
-        font-size: 1.5rem;
-        color: #00BFA5;
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        margin: 8px 20px;
-    }
+  /* Content should not be pushed down */
+  .content {
+    padding: 18px;
+    margin-left: 0; /* ignore sidebar width */
+  }
+  
+  /* optional: smooth transition for sidebar */
+.sidebar {
+  transition: transform 0.25s ease;
+}
+
+/* hide button when sidebar is active */
+#menuToggle.hide {
+  display: none;
+}
+
+}
+
+
 }
 
 
@@ -193,7 +219,8 @@
   </div>
 </header>
 
-<button id="menuToggle">☰ EXPLORE</button>
+<button id="menuToggle" >☰ EXPLORE</button>
+<div class="overlay" id="overlay"></div>
 
 <div class="container">
   <aside class="sidebar" id="sidebar">
@@ -375,18 +402,73 @@
 <script>
   const sidebar = document.getElementById('sidebar');
   const menuToggle = document.getElementById('menuToggle');
+const overlay = document.getElementById('overlay');
 
 menuToggle.addEventListener('click', () => {
-    sidebar.classList.toggle('active');
-    document.querySelector('.content').classList.toggle('shifted');
+  const isActive = sidebar.classList.toggle('active'); // toggle sidebar
+  if (isActive) {
+    menuToggle.classList.add('hide'); // hide button
+  } else {
+    menuToggle.classList.remove('hide'); // show button
+  }
 });
 
-// Close sidebar when clicking a link
-document.querySelectorAll('.sidebar .nav-link, .sidebar .exp-item').forEach(link => {
-    link.addEventListener('click', () => {
-        sidebar.classList.remove('active');
-        document.querySelector('.content').classList.remove('shifted');
+// Hide sidebar when clicking a link and show button again
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', () => {
+    sidebar.classList.remove('active');
+    menuToggle.classList.remove('hide');
+  });
+});
+// Close sidebar when clicking any sidebar link or subnode
+function closeSidebar() {
+  sidebar.classList.remove('active');
+  menuToggle.classList.remove('hide');
+}
+
+// Regular nav links
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', closeSidebar);
+});
+
+// Experience subnodes
+document.querySelectorAll('.exp-item').forEach(item => {
+  item.addEventListener('click', () => {
+    // existing code to load experience details
+    document.querySelectorAll('.exp-item').forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+
+    const id = item.dataset.id;
+    const data = roleData[id];
+    if (!data) return;
+
+    const panel = document.getElementById('experiencePanel');
+    panel.querySelector('.company-title').textContent = data.title;
+    panel.querySelector('.company-role').textContent = data.role;
+
+    const bulletsUL = document.getElementById('experienceBullets');
+    bulletsUL.innerHTML = "";
+    data.bullets.forEach(b => {
+      const li = document.createElement('li');
+      li.textContent = "• " + b;
+      bulletsUL.appendChild(li);
     });
+
+    // Scroll into view
+    document.getElementById('experience').scrollIntoView({behavior:'smooth', block:'start'});
+
+    // **close sidebar in mobile**
+    closeSidebar();
+  });
+
+  // keyboard accessibility
+  item.tabIndex = 0;
+  item.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      item.click();
+    }
+  });
 });
 
   const expList = document.getElementById('expListContainer');
