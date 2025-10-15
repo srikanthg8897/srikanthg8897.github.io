@@ -5,53 +5,138 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Srikanth Garimella — Portfolio</title>
 <style>
-  * { box-sizing: border-box; margin:0; padding:0; }
-  body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; background:#ede4e4; color:#e0e0e0; line-height:1.5; }
-  a { color:#1e90ff; text-decoration:none; } a:hover { text-decoration:underline; }
-  ul { list-style:none; }
-
-  .topbar {
-    position:sticky; top:0; z-index:1000;
-    background:#ebd7d78e8; color:#fff; display:flex; justify-content:space-between; align-items:center;
-    padding:12px 20px; border-bottom:1px solid rgba(255,255,255,0.04); box-shadow:0 2px 6px rgba(0,0,0,0.6);
+  /* ===== Reset & Base ===== */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: #0D1B2A; /* deep blue background */
+    color: #C0C0C0; /* silver/light gray text */
+    line-height: 1.5;
   }
-  .topbar .name { color:#0D3A8A; font-weight:1000; font-size:1.50rem; }
-  .topbar .contact { text-align:right; font-size:0.9rem; color:#0D3A8A; }
-  .topbar .contact .phone { font-size:0.85rem; color:#0D3A8A; }
+  a { color: #00BFA5; text-decoration: none; } /* teal links */
+  a:hover { text-decoration: underline; }
+  ul { list-style: none; }
 
-  .container { display:flex; min-height:calc(100vh - 56px); }
+  /* ===== Top Bar ===== */
+  .topbar {
+    position: sticky; top: 0; z-index: 1000;
+    background: linear-gradient(90deg, #0D1B2A, #073B4C); /* deep blue gradient */
+    color: #C0C0C0;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+  }
+  .topbar .name {
+    color: #00BFA5; /* teal highlight */
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
+  .topbar .contact {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* right-align both items */
+    font-size: 0.9rem;
+    color: #C0C0C0;
+}
+
+.topbar .contact .email {
+    text-decoration: underline;
+    color: #00BFA5; /* teal */
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+
+.topbar .contact .phone {
+    font-size: 0.85rem;
+    color: #A8DADC; /* lighter teal */
+}
+
+  /* ===== Layout ===== */
+  .container { display: flex; min-height: calc(100vh - 56px); }
   .sidebar {
-    width:250px; background:#daeaf1; padding:18px;
-    position:sticky; top:56px; height:calc(100vh - 56px); overflow:auto;
+    width: 250px;
+    background: linear-gradient(180deg, #073B4C, #005F73); /* deep blue → teal */
+    padding: 18px;
+    position: sticky; top: 56px; height: calc(100vh - 56px); overflow: auto;
     transition: width 280ms ease, box-shadow 280ms ease;
     box-shadow: inset -1px 0 0 rgba(255,255,255,0.02);
   }
-  .sidebar.interactive, .sidebar:hover { width:360px; box-shadow:0 6px 18px rgba(0,0,0,0.6); }
+  .sidebar:hover,
+  .sidebar.interactive { width: 360px; box-shadow: 0 6px 18px rgba(0,0,0,0.6); }
 
-  .sidebar h2 { color:#1e90ff; font-size:1.1rem; text-align:center; margin-bottom:12px; }
-  nav { display:block; }
-  .nav-link, .exp-toggle, .exp-item {
-    display:flex; align-items:center; justify-content:flex-start;
-    width:100%; padding:9px 10px; border-radius:6px; margin-bottom:6px;
-    background:transparent; border:0; color:#e6e6e6; cursor:pointer;
-    text-align:left; font-size:0.95rem; transition: background 160ms, transform 120ms;
+  .sidebar h2 {
+    color: #00BFA5;
+    font-size: 1.1rem;
+    text-align: center;
+    margin-bottom: 12px;
   }
-  .nav-link:hover, .exp-toggle:hover, .exp-item:hover { background:#272727; transform:translateY(-1px); }
-  .exp-toggle { font-weight:700; justify-content:space-between; }
-  .exp-toggle .caret { font-size:0.85rem; opacity:0.85; transition: transform 200ms; }
-  .exp-toggle[aria-expanded="true"] .caret { transform:rotate(90deg); }
+  nav { display: block; }
+  .nav-link, .exp-toggle, .exp-item {
+    display: flex; align-items: center; justify-content: flex-start;
+    width: 100%; padding: 9px 10px; border-radius: 6px; margin-bottom: 6px;
+    background: transparent; border: 0; color: #C0C0C0;
+    text-align: left; font-size: 0.95rem;
+    transition: background 160ms, transform 120ms;
+    cursor: pointer;
+  }
+  .nav-link:hover, .exp-toggle:hover, .exp-item:hover { 
+    background: rgba(0, 191, 165, 0.15); /* subtle teal hover */
+    transform: translateY(-1px); 
+  }
+  .exp-toggle { font-weight: 700; justify-content: space-between; }
+  .exp-toggle .caret { font-size: 0.85rem; opacity: 0.85; transition: transform 200ms; }
+  .exp-toggle[aria-expanded="true"] .caret { transform: rotate(90deg); }
 
-  .exp-list { margin-left:6px; padding-left:6px; border-left:1px dashed rgba(255,255,255,0.03); overflow:hidden; transition:max-height 180ms ease; max-height:0; }
-  .exp-item.active { background:#0D3A8A; color:#fff; font-weight:600; }
+  .exp-list {
+    margin-left: 6px; padding-left: 6px;
+    border-left: 1px dashed rgba(255,255,255,0.05);
+    overflow: hidden; transition: max-height 180ms ease; max-height: 0;
+  }
+  .exp-item.active {
+    background: #00BFA5; 
+    color: #0D1B2A; /* deep blue text for contrast */
+    font-weight: 600;
+  }
 
-  .content { flex:1; padding:28px 36px; overflow:auto; min-width:0; }
-  .experience-panel { background:#151515; border:1px solid rgba(255,255,255,0.03); padding:18px; border-radius:10px; }
-  .company-title { color:#0D3A8A; font-weight:700; font-size:1.05rem; margin-bottom:8px; }
-  .company-role { color:#dcdcdc; font-weight:600; margin-bottom:10px; font-size:0.98rem; }
-  .bullets { margin-left:16px; margin-top:8px; }
-  .bullets li { margin-bottom:8px; color:#d1d1d1; }
+  /* ===== Content area ===== */
+  .content {
+    flex: 1; padding: 28px 36px; overflow: auto; min-width: 0;
+  }
+  section { margin-bottom: 38px; }
+  h1,h2,h3 { color: #00BFA5; margin-bottom: 12px; }
+  h1 { font-size: 2rem; }
+  .contact-line { color: #C0C0C0; margin-bottom: 12px; }
 
+  /* ===== Experience panel ===== */
+  .experience-panel {
+    background: linear-gradient(180deg, #073B4C, #005F73); 
+    border: 1px solid rgba(255,255,255,0.05); 
+    padding: 18px; border-radius: 10px;
+  }
+  .company-title { color: #A8DADC; font-weight: 700; font-size: 1.05rem; margin-bottom: 8px; }
+  .company-role { color: #99f07f; font-weight: 900; margin-bottom: 10px; font-size: 0.98rem; }
+  .bullets { margin-left: 16px; margin-top: 8px; }
+  .bullets li { margin-bottom: 8px; color: #B0B0B0; }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 880px) {
+    .container { flex-direction: column; }
+    .sidebar { width: 100%; height: auto; position: relative; top: 0; display: flex; flex-wrap: wrap; padding: 12px; }
+    .sidebar:hover { width: 100%; }
+    .content { padding: 18px; }
+  }
+  @media (max-width: 520px) {
+    .topbar { padding: 10px; font-size: 1rem; }
+    .topbar .contact { font-size: 0.8rem; text-align: right; }
+  }
+
+  /* small utility */
+  .muted { color: #B0B0B0; font-size: 0.9rem; }
 </style>
+
+
+
 </head>
 <body>
 
@@ -94,10 +179,9 @@
   </aside>
 
   <main class="content" id="mainContent">
-    <section id="about">
+    <section id="about" style="text-align: justify;">
       <h1>About Me</h1>
-      <div class="contact-line">Garimella.Srikanth88@gmail.com • +1-732-642-7879</div>
-      <p>I am a seasoned software professional with over 14 years of experience in full-stack development.Firsthand experience in leading cross-functional Agile teams of 4–6 developers, conducting code reviews, and ensuring adherence to SOLID principles.Functioned as a single point of contact for clients, managing onshore/offshore coordination and project briefings.Adept at stakeholder communication, incident resolution, defect fixes, and root cause analysis, ensuring high availability and performance of critical systems.Defined technical strategy for migrating legacy .NET Framework applications to .NET 7/8 with minimal business disruption.</p>
+            <p>I am a seasoned software professional with over 14+ years of experience in full-stack development.Firsthand experience in leading cross-functional Agile teams of 4–6 developers, conducting code reviews, and ensuring adherence to SOLID principles.Functioned as a single point of contact for clients, managing onshore/offshore coordination and project briefings.Adept at stakeholder communication, incident resolution, defect fixes, and root cause analysis, ensuring high availability and performance of critical systems.Defined technical strategy for migrating legacy .NET Framework applications to .NET 7/8 with minimal business disruption.</p>
     </section>
 
     <section id="experience">
@@ -116,8 +200,8 @@
       <section id="education" aria-labelledby="education-heading">
         <h2 id="education-heading">Education</h2>
         <div style="background:#151515;padding:14px;border-radius:8px"> 
-          <p><strong>International Institute of Information Technology_BANGALORE — Post Graduate Diploma in Information Technology</strong><br/><small>08/2010 — Bengaluru, India</small></p>
-          <p style="margin-top:8px"><strong>JNTU — Bachelor of Engineering (ECE)</strong><br/><small>04/2009 — Hyderabad, India</small></p>
+          <p><strong>INTERNATIONAL INSTITUTE OF INFORMATION TECHNOLOGY_BANGALORE-INDIA—Post Graduate Diploma in Information Technology</strong><br/><small>08/2010 — Bengaluru, India</small></p>
+          <p style="margin-top:8px"><strong>JNTU-HYDERABAD-INDIA Sri Indu College of Engineering & Technology (ECE)</strong><br/><small>04/2009 — Hyderabad, India</small></p>
         </div>
       </section>
 
@@ -152,17 +236,184 @@
   const expList = document.getElementById('expListContainer');
 
   const roleData = {
-    carelon: {title:"CARELON BEHAVIORAL HEALTH", role:"Senior Lead Developer", bullets:["Modernized .NET apps","Implemented CI/CD","Led code reviews"]},
-    apollo: {title:"APOLLO ATHENE", role:"Senior Lead Developer", bullets:["Built REST APIs","Event-driven microservices"]},
-    elevance: {title:"ELEVANCE HEALTH", role:"Solution Architect", bullets:["Designed WPF apps","Authored API contracts"]},
-    medtronic: {title:"MEDTRONIC ENGINEERING", role:"Senior Lead Developer", bullets:["Developed ASP.NET apps","Applied async programming"]},
-    cyient: {title:"CYIENT TECHNOLOGIES", role:"Senior Technical Lead", bullets:["Designed WinForms/WPF modules","Technical mentoring"]},
-    launchship: {title:"LAUNCHSHIP TECHNOLOGIES", role:"Senior Software Engineer", bullets:["Architected scalable web apps"]},
-    cognizant: {title:"COGNIZANT TECHNOLOGIES", role:"Associate Projects", bullets:["Implemented WCF services","Custom WPF controls"]},
-    technobrain: {title:"TECHNO BRAIN INDIA", role:"Senior Software Engineer", bullets:["Developed ASP.NET Web Forms"]},
-    bofa: {title:"BANK OF AMERICA", role:"Senior Software Engineer", bullets:["Worked on EPS apps","Authored complex stored procedures"]},
-    radix: {title:"RADIX LEARNING", role:"Software Engineer", bullets:["Built assessment tools","Implemented Java backend"]}
-  };
+  carelon: {
+    title: "CARELON BEHAVIORAL HEALTH",
+    role: "Senior Lead Developer [MAY-2024 To Present]",
+    bullets: [
+      "Used C# as programming Language",
+      "Led the modernization of legacy .NET applications to .NET 8, improving performance by 30% and reducing deployment time",
+      "Worked on creating Stored procedures integrating with Business Logic layer",
+      "Application based on N-tier Architecture",
+      "Led sprint planning and backlog grooming sessions to align deliverables with business priorities",
+      "Implemented CI/CD pipelines in Azure DevOps and Jenkins to streamline deployment and reduce release cycles",
+      "Oversaw daily code reviews and enforced SOLID and clean code practices, ensuring maintainability across the team",
+      "Performed root cause analysis for high-priority incidents and introduced long-term preventive solutions",
+      "Designed a plug-in architecture for legacy .NET migration, enabling modular feature upgrades with minimal downtime",
+      "Used C# Programming Language implementing Delegates, Generics, Threads, Tasks",
+      "Environment: Visual Studio 2022, SQL Server 2018, C# programming language, Entity Framework core 6, ADO.NET, WinForms"
+    ]
+  },
+  apollo: {
+    title: "APOLLO ATHENE",
+    role: "Senior Lead Developer [OCT-2023 To APR-2024]",
+    bullets: [
+      "Developed and consumed RESTful APIs using ASP.NET Web API, applying routing configurations, HTTP methods, and OAuth2 for secure communication",
+      "Designed and implemented microservices based on event-driven architecture, utilizing Kafka to consume asynchronous messages for real-time data processing",
+      "Utilized Entity Framework and ADO.NET for robust data access patterns, implementing repository pattern and LINQ queries for efficient data retrieval",
+      "Configured pipelines for CI/CD and version control parallel with Azure DevOps",
+      "Created complex Stored Procedures and integrated them into SSRS (RDL) reports, deployed through TIDAL job scheduler across Dev, UAT, and Prod environments",
+      "Applied dependency injection (DI) and Inversion of Control (IoC) to improve service decoupling and unit testability within .NET services",
+      "Leveraged asynchronous programming (async/await, Task Parallel Library) and lambda expressions to optimize performance in non-blocking operations",
+      "Participated in architectural discussions to modernize codebase using design patterns (Factory, Singleton, Strategy), promoting scalability and maintainability",
+      "Led development efforts in a Scrum-based Agile environment with bi-weekly sprints, managing client onboarding requirements and sprint deliverables",
+      "Collaborated with cross-functional teams to resolve performance bottlenecks and ensure data integrity across distributed systems",
+      "Environment: Visual Studio 2022, C#, SQL Server 2014, SSRS, TIDAL"
+    ]
+  },
+  elevance: {
+    title: "ELEVANCE HEALTH",
+    role: "Solution Architect [DEC-2022 To SEP-2023]",
+    bullets: [
+      "Designed elegant and responsive user interfaces using XAML and WPF controls, incorporating animations, styles, and control templates",
+      "Customized control behaviors and appearances by extending WPF components, delivering a unique and polished UI aligned with product requirements",
+      "Implemented advanced data binding techniques to enable seamless synchronization between UI elements and backend data models",
+      "Applied MVVM architectural pattern rigorously to separate concerns, improve code maintainability, and increase testability of WPF applications",
+      "Developed custom WPF controls and templates tailored to specific application needs, contributing to a distinctive and user-friendly interface",
+      "Utilized multithreading and asynchronous programming to optimize application performance, keeping the UI fluid and responsive under heavy workloads",
+      "Integrated data access layers using Entity Framework, ADO.NET, and other technologies for robust database interaction",
+      "Implemented Test-Driven Development (TDD) methodologies to ensure code quality, reduce bugs, and maintain high test coverage",
+      "Designed and developed microservices using event-driven architecture, improving system scalability and decoupling",
+      "Consumed and created RESTful API services, applying OAuth 2.0 authentication and authorization standards for secure communication",
+      "Modified YML deployment configuration files to facilitate application deployment across multiple servers and environments",
+      "Authored complex stored procedures to meet evolving business requirements, including migrating data from archive to real-time tables",
+      "Environment: Visual Studio 2022, SQL Server 2018, WPF, C#, Oracle Toad"
+    ]
+  },
+  medtronic: {
+    title: "MEDTRONIC ENGINEERING AND INNOVATION CENTER",
+    role: "Senior Lead Developer [MAR-2020 To DEC-2022]",
+    bullets: [
+      "Developed and maintained enterprise-grade applications using ASP.NET, ASP.NET MVC, ASP.NET Web API, Entity Framework, C#, and modern front-end technologies",
+      "Designed and implemented RESTful Web API services, creating controllers, configuring routes, and ensuring scalability and security",
+      "Utilized Lambda Expressions and LINQ in ASP.NET Web API to perform optimized querying of relational databases",
+      "Applied parallel programming techniques using Tasks, Async/Await, and multi-threading to enhance application performance and responsiveness",
+      "Developed complex SQL Server stored procedures to retrieve and manipulate data based on dynamic business logic",
+      "Executed ETL processes for data extraction, transformation, and loading, streamlining information processing for analytics and reporting",
+      "Applied Test-Driven Development (TDD) principles to improve code quality, reduce defects, and ensure maintainable architecture",
+      "Estimated and planned project deliverables using Microsoft Project, ensuring alignment with timelines and resource allocation",
+      "Led a cross-functional team of five developers, overseeing technical implementation, code reviews, mentoring, and delivery of high-quality solutions",
+      "Implemented .NET Core features including Dependency Injection (DI) and Inversion of Control (IoC)",
+      "Leveraged advanced C# features such as Delegates, Generics, Events, Threading, and Task Parallel Library (TPL)",
+      "Development Environment: Visual Studio 2019, SQL Server 2014, WinForms, WPF, ASP.NET, ASP.NET MVC, Web API, C#, HTML, CSS"
+    ]
+  },
+  cyient: {
+    title: "CYIENT TECHNOLOGIES (Client: MEDTRONIC)",
+    role: "Senior Technical Lead [DEC-2018 To MAR-2020]",
+    bullets: [
+      "Designed and developed enterprise desktop applications using Windows Forms and WPF, delivering rich, interactive user experiences",
+      "Developed and maintained RESTful API services to enable seamless communication between applications",
+      "Prepared detailed estimations for project deliverables, ensuring accurate resource planning and on-time delivery",
+      "Executed Agile-based sprints, collaborating with cross-functional teams to deliver incremental features and enhancements",
+      "Developed responsive user interfaces using JavaScript, HTML5, and CSS3",
+      "Created comprehensive documentation for sprint cycles, including sign-off sheets, unit test case documents, and release notes",
+      "Applied Test-Driven Development (TDD) methodologies to improve code quality and maintainability",
+      "Implemented SOLID design principles in the Timesheet Module, resulting in modular, scalable, and maintainable code",
+      "Enforced coding standards and best practices, ensuring consistent code quality across the team",
+      "Developed Angular 14 prototypes for the current product",
+      "Designed and optimized database structures in SQL Server 2012, creating tables, stored procedures, and indexes",
+      "Led a team of developers, managing task assignments, conducting code reviews, and delivering project requirements",
+      "Technical Environment: Visual Studio 2017, SQL Server 2012, WinForms, WPF, ASP.NET, ASP.NET MVC, Web API, C#"
+    ]
+  },
+  launchship: {
+    title: "LAUNCHSHIP TECHNOLOGIES (Client: GOOGLE)",
+    role: "Senior Software Engineer [SEP-2017 To DEC-2018]",
+    bullets: [
+      "Architected and developed scalable web applications using ASP.NET MVC framework",
+      "Designed and optimized complex stored procedures in SQL Server 2012",
+      "Conducted performance tuning of stored procedures and SQL queries to reduce latency",
+      "Applied design patterns (Repository, Factory, MVC) to front-end code",
+      "Leveraged LINQ on datasets to streamline data querying",
+      "Prepared sprint cycle documentation and sign-off documents",
+      "Implemented Test-Driven Development (TDD) methodologies",
+      "Followed SOLID principles in Timesheet Module development",
+      "Managed code versioning and source control, transitioning from TFS to Git",
+      "Developed Angular 2 prototypes for UI/UX validation",
+      "Designed and maintained database schemas in SQL Server 2012",
+      "Led a team of developers, overseeing task allocation, code reviews, and timely delivery",
+      "Technical Environment: Visual Studio 2012, SQL Server 2012, ASP.NET, ASP.NET MVC, Windows Services, C#, Angular 14"
+    ]
+  },
+  cognizant: {
+    title: "COGNIZANT TECHNOLOGIES INDIA PVT LTD",
+    role: "Associate Projects [JAN-2015 To SEP-2017]",
+    bullets: [
+      "Designed and developed interactive Windows Forms for core application modules",
+      "Created and optimized SQL Server 2012 database tables",
+      "Built custom WPF controls using XAML",
+      "Developed responsive UI components with JavaScript, HTML5, and CSS3",
+      "Designed and implemented WCF services to securely fetch data from downstream application databases",
+      "Implemented dynamic data binding to synchronize UI elements with changes in the business model",
+      "Utilized LINQ on datasets to optimize data querying",
+      "Authored Requirement Case Analysis Documents for release cycles",
+      "Integrated Sync Fusion controls to enhance application capabilities",
+      "Developed and maintained microservices",
+      "Implemented OAuth for secure authentication and authorization",
+      "Environment: Visual Studio 2012, SQL Server 2012, ASP.NET, Windows Forms, WPF, C#, WCF, Windows Services"
+    ]
+  },
+  technobrain: {
+    title: "TECHNO BRAIN INDIA PVT LTD",
+    role: "Senior Software Engineer [MAR-2014 To JAN-2015]",
+    bullets: [
+      "Developed ASP.NET Web Forms for core application modules",
+      "Built reusable Web User Controls to standardize functionality",
+      "Leveraged ADO.NET objects such as Datasets, Data Tables, and Data Adapters",
+      "Consumed WCF services to retrieve data and integrate with third-party applications",
+      "Designed and implemented SSRS reports to generate statistical and analytical insights",
+      "Integrated AJAX controls web forms to deliver a rich, responsive user interface",
+      "Designed and optimized SQL Server 2008 databases",
+      "Environment: Visual Studio 2010, SQL Server 2008, ASP.NET, C#, JavaScript, AJAX, WCF, SSRS"
+    ]
+  },
+  bofa: {
+    title: "BANK OF AMERICA (BA CONTINUUM INDIA PVT LTD)",
+    role: "Senior Software Engineer [MAR-2011 To MAR-2014]",
+    bullets: [
+      "Developed and maintained the Control Plan for the application",
+      "Contributed enhancement requirements to Low-Level Design (LLD) documentation",
+      "Designed and developed dynamic web pages and User Controls",
+      "Participated in framework design and implementation using ASP.NET MVC",
+      "Created complex stored procedures to retrieve and manipulate data",
+      "Prepared monitoring and reviewing documentation for production servers",
+      "Authored data integrity and error handling documentation",
+      "Led disaster recovery exercises for central services",
+      "Participated in Application Governance activities",
+      "Developed and optimized hierarchical data grids",
+      "Utilized ADO.NET extensively for data access",
+      "Enhanced skills in WPF and WCF through direct development and integration tasks",
+      "Performed code debugging and maintenance",
+      "Monitored batch jobs and rewrote job scripts as needed",
+      "Provided post-release support for defect fixes",
+      "Managed Maximo tickets for production issues",
+      "Environment: Visual Studio 2010, SQL Server 2008, Team Foundation Server (TFS), Windows Forms, C#"
+    ]
+  },
+  radix: {
+    title: "RADIX LEARNING PVT LTD",
+    role: "Software Engineer [AUG-2010 To DEC-2010]",
+    bullets: [
+      "Designed and developed a task-centric assessment tool called Code Jumbler",
+      "Implemented scalable application architecture using the MVC design pattern",
+      "Developed dynamic user interfaces leveraging Adobe Flex with ActionScript 2.0 and 3.0",
+      "Authored Java classes for efficient database interaction",
+      "Designed and optimized database schemas in SQL Server 2008",
+      "Technical Environment: Eclipse IDE, SQL Server 2008, Java, Adobe Flex, ActionScript 2.0/3.0"
+    ]
+  }
+};
+
 
   // Toggle Experiences list
   expToggle.addEventListener("click", () => {
