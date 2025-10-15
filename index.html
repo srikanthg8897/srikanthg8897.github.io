@@ -1,90 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Srikanth Garimella — Portfolio</title>
-  <style>
-    /* ===== Reset & Base ===== */
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background:#121212;color:#e0e0e0;line-height:1.5;
-      -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
-    }
-    a{color:#1e90ff;text-decoration:none}
-    a:hover{text-decoration:underline}
-    ul{list-style:none}
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Srikanth Garimella — Portfolio</title>
+<style>
+  * { box-sizing: border-box; margin:0; padding:0; }
+  body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; background:#e9afaf; color:#e0e0e0; line-height:1.5; }
+  a { color:#1e90ff; text-decoration:none; } a:hover { text-decoration:underline; }
+  ul { list-style:none; }
 
-    /* ===== Top Bar ===== */
-    .topbar{
-      position:sticky;top:0;z-index:1000;
-      background:#000;color:#fff;
-      display:flex;align-items:center;justify-content:space-between;
-      padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);
-      box-shadow:0 2px 6px rgba(0,0,0,0.6);
-    }
-    .topbar .name{
-      color:#0D3A8A; /* dark blue highlight */
-      font-weight:700;font-size:1.25rem;
-    }
-    .topbar .contact{
-      text-align:right;font-size:0.9rem;color:#cfcfcf;
-    }
-    .topbar .contact .email{display:block}
-    .topbar .contact .phone{display:block;font-size:0.85rem;color:#9aa6ff}
+  .topbar {
+    position:sticky; top:0; z-index:1000;
+    background:#ebd7d78e8; color:#fff; display:flex; justify-content:space-between; align-items:center;
+    padding:12px 20px; border-bottom:1px solid rgba(255,255,255,0.04); box-shadow:0 2px 6px rgba(0,0,0,0.6);
+  }
+  .topbar .name { color:#0D3A8A; font-weight:1000; font-size:1.50rem; }
+  .topbar .contact { text-align:right; font-size:0.9rem; color:#cfcfcf; }
+  .topbar .contact .phone { font-size:0.85rem; color:#9aa6ff; }
 
-    /* ===== Layout ===== */
-    .container{display:flex;min-height:calc(100vh - 56px)} /* 56px approx topbar */
-    /* Sidebar default collapsed width */
-    .sidebar{
-      width:250px; background:#1f1f1f; padding:18px;
-      position:sticky; top:56px; height:calc(100vh - 56px); overflow:auto;
-      transition:width 280ms ease, box-shadow 280ms ease;
-      box-shadow:inset -1px 0 0 rgba(255,255,255,0.02);
-    }
-    /* Expand while hovering */
-    .sidebar:hover{ width:360px; box-shadow: 0 6px 18px rgba(0,0,0,0.6); }
+  .container { display:flex; min-height:calc(100vh - 56px); }
+  .sidebar {
+    width:250px; background:#7ec0da; padding:18px;
+    position:sticky; top:56px; height:calc(100vh - 56px); overflow:auto;
+    transition: width 280ms ease, box-shadow 280ms ease;
+    box-shadow: inset -1px 0 0 rgba(255,255,255,0.02);
+  }
+  .sidebar.interactive, .sidebar:hover { width:360px; box-shadow:0 6px 18px rgba(0,0,0,0.6); }
 
-    /* Expand while interacting (JS toggles .interactive) */
-    .sidebar.interactive{ width:360px; box-shadow: 0 6px 18px rgba(0,0,0,0.6); }
+  .sidebar h2 { color:#1e90ff; font-size:1.1rem; text-align:center; margin-bottom:12px; }
+  nav { display:block; }
+  .nav-link, .exp-toggle, .exp-item {
+    display:flex; align-items:center; justify-content:flex-start;
+    width:100%; padding:9px 10px; border-radius:6px; margin-bottom:6px;
+    background:transparent; border:0; color:#e6e6e6; cursor:pointer;
+    text-align:left; font-size:0.95rem; transition: background 160ms, transform 120ms;
+  }
+  .nav-link:hover, .exp-toggle:hover, .exp-item:hover { background:#272727; transform:translateY(-1px); }
+  .exp-toggle { font-weight:700; justify-content:space-between; }
+  .exp-toggle .caret { font-size:0.85rem; opacity:0.85; transition: transform 200ms; }
+  .exp-toggle[aria-expanded="true"] .caret { transform:rotate(90deg); }
 
-    .sidebar h2{ color:#1e90ff; font-size:1.1rem; text-align:center; margin-bottom:12px; }
-    nav{ display:block; }
-    .nav-link, .exp-toggle, .company-btn{
-      display:flex; align-items:center; justify-content:flex-start;
-      width:100%; padding:9px 10px; border-radius:6px; margin-bottom:6px;
-      background:transparent; border:0; color: #e6e6e6; cursor:pointer;
-      transition:background 180ms, transform 120ms;
-      text-align:left; font-size:0.95rem;
-    }
-    .nav-link:hover, .exp-toggle:hover, .company-btn:hover { background:#272727; transform:translateY(-1px); }
+  .exp-list { margin-left:6px; padding-left:6px; border-left:1px dashed rgba(255,255,255,0.03); overflow:hidden; transition:max-height 180ms ease; max-height:0; }
+  .exp-item.active { background:#0D3A8A; color:#fff; font-weight:600; }
 
-    .exp-toggle { font-weight:700; color:#fff; display:flex; justify-content:space-between; align-items:center; }
-    .exp-toggle .caret { font-size:0.85rem; opacity:0.85; transform:rotate(0deg); transition: transform 200ms; }
-    .exp-toggle[aria-expanded="true"] .caret { transform:rotate(90deg); }
+  .content { flex:1; padding:28px 36px; overflow:auto; min-width:0; }
+  .experience-panel { background:#151515; border:1px solid rgba(255,255,255,0.03); padding:18px; border-radius:10px; }
+  .company-title { color:#0D3A8A; font-weight:700; font-size:1.05rem; margin-bottom:8px; }
+  .company-role { color:#dcdcdc; font-weight:600; margin-bottom:10px; font-size:0.98rem; }
+  .bullets { margin-left:16px; margin-top:8px; }
+  .bullets li { margin-bottom:8px; color:#d1d1d1; }
 
-    /* Experience sub-list */
-    .exp-list{ margin-left:6px; padding-left:6px; border-left:1px dashed rgba(255,255,255,0.03); margin-top:8px; }
-    .exp-item{ padding:8px 10px; margin-bottom:6px; border-radius:6px; cursor:pointer; background:transparent; color:#e6e6e6; text-align:left; transition: background 160ms; }
-    .exp-item:hover{ background:#2b2b2b; }
-    .exp-item.active{ background:#0D3A8A; color:#fff; font-weight:600; }
+</style>
+</head>
+<body>
 
-    /* Content area */
-    .content{ flex:1; padding:28px 36px; overflow:auto; min-width:0; }
-    section{ margin-bottom:38px; }
-    h1,h2,h3{ color:#1e90ff; margin-bottom:12px; }
-    h1{ font-size:2rem }
-    .contact-line{ color:#aaaaaa; margin-bottom:12px }
+<header class="topbar">
+  <div class="name">SRIKANTH GARIMELLA</div>
+  <div class="contact">
+    <span class="email">Garimella.Srikanth88@gmail.com</span>
+    <span class="phone">+1-732-642-7879</span>
+  </div>
+</header>
 
-    /* Experience panel content */
-    .experience-panel{ background:#151515; border:1px solid rgba(255,255,255,0.03); padding:18px; border-radius:10px; }
-    .company-title{ color:#0D3A8A; font-weight:700; font-size:1.05rem; margin-bottom:8px; }
-    .company-role{ color:#dcdcdc; font-weight:600; margin-bottom:10px; font-size:0.98rem }
-    .bullets{ margin-left:16px; margin-top:8px; }
-    .bullets li{ margin-bottom:8px; color:#d1d1d1; }
+<div class="container">
+  <aside class="sidebar" id="sidebar">
+    <h2>Menu</h2>
+    <nav>
+      <a class="nav-link" href="#about">About Me</a>
 
-    /* Responsive: collapse sidebar into top menu on narrow screens */
-    @media (max-width:880px){
-      .container{ flex-direction:column; }
-      .sidebar{ width:
+      <button class="exp-toggle" id="expToggle" aria-expanded="false">
+        <span>Experiences</span>
+        <span class="caret">▶</span>
+      </button>
+
+      <div id="expListContainer" class="exp-list">
+        <div class="exp-item" data-id="carelon">CARELON BEHAVIORAL HEALTH — SENIOR LEAD DEVELOPER</div>
+        <div class="exp-item" data-id="apollo">APOLLO ATHENE — SENIOR LEAD DEVELOPER</div>
+        <div class="exp-item" data-id="elevance">ELEVANCE HEALTH — SOLUTION ARCHITECT</div>
+        <div class="exp-item" data-id="medtronic">MEDTRONIC ENGINEERING — SENIOR LEAD DEVELOPER</div>
+        <div class="exp-item" data-id="cyient">CYIENT TECHNOLOGIES — SENIOR TECHNICAL LEAD</div>
+        <div class="exp-item" data-id="launchship">LAUNCHSHIP TECHNOLOGIES — SENIOR SOFTWARE ENGINEER</div>
+        <div class="exp-item" data-id="cognizant">COGNIZANT TECHNOLOGIES — ASSOCIATE PROJECTS</div>
+        <div class="exp-item" data-id="technobrain">TECHNO BRAIN INDIA — SENIOR SOFTWARE ENGINEER</div>
+        <div class="exp-item" data-id="bofa">BANK OF AMERICA — SENIOR SOFTWARE ENGINEER</div>
+        <div class="exp-item" data-id="radix">RADIX LEARNING — SOFTWARE ENGINEER</div>
+      </div>
+
+      <a class="nav-link" href="#education">Education</a>
+      <a class="nav-link" href="#certifications">Certifications</a>
+      <a class="nav-link" href="#portfolio">Portfolio / Links</a>
+    </nav>
+  </aside>
+
+  <main class="content" id="mainContent">
+    <section id="about">
+      <h1>About Me</h1>
+      <div class="contact-line">Garimella.Srikanth88@gmail.com • +1-732-642-7879</div>
+      <p>I am a seasoned software professional with over 14 years of experience in full-stack development...</p>
+    </section>
+
+    <section id="experience">
+      <h2>Experience</h2>
+      <div class="experience-panel" id="experiencePanel">
+        <div class="company-title">Select a company from the left to view role details</div>
+        <div class="company-role muted">Click any experience to load details.</div>
+        <ul class="bullets" id="experienceBullets">
+          <li>• Example: Led development for major enterprise modules.</li>
+        </ul>
+      </div>
+    </section>
+	
+	
+      <!-- Education -->
+      <section id="education" aria-labelledby="education-heading">
+        <h2 id="education-heading">Education</h2>
+        <div style="background:#151515;padding:14px;border-radius:8px">
+          <p><strong>International Institute of Information Technology — Post Graduate Diploma in IT</strong><br/><small>08/2010 — Bengaluru, India</small></p>
+          <p style="margin-top:8px"><strong>JNTU — Bachelor of Engineering (ECE)</strong><br/><small>04/2009 — Hyderabad, India</small></p>
+        </div>
+      </section>
+
+      <!-- Certifications -->
+      <section id="certifications" aria-labelledby="certifications-heading">
+        <h2 id="certifications-heading">Certifications & Achievements</h2>
+        <div style="background:#151515;padding:14px;border-radius:8px">
+          <p>Generative AI Foundations — upGrad & Microsoft (August 2025)</p>
+          <p>ITIL 2011, Silver Award (2012), Bronze Award (2019), Appreciation (2020), Promoted to Lead Developer (2022)</p>
+        </div>
+      </section>
+
+      <!-- Portfolio / Links -->
+      <section id="portfolio" aria-labelledby="portfolio-heading">
+        <h2 id="portfolio-heading">Portfolio & Profiles</h2>
+        <div style="background:#151515;padding:14px;border-radius:8px">
+          <ul>
+            <li><a href="https://www.linkedin.com/in/srikanth-garimella-6b0b372b/" target="_blank" rel="noopener">LinkedIn</a></li>
+            <li>Email: Garimella.Srikanth88@gmail.com</li>
+            <li>Phone: +1-732-642-7879</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </div>
+  </main>
+</div>
+
+<script>
+  const sidebar = document.getElementById('sidebar');
+  const expToggle = document.getElementById('expToggle');
+  const expList = document.getElementById('expListContainer');
+
+  const roleData = {
+    carelon: {title:"CARELON BEHAVIORAL HEALTH", role:"Senior Lead Developer", bullets:["Modernized .NET apps","Implemented CI/CD","Led code reviews"]},
+    apollo: {title:"APOLLO ATHENE", role:"Senior Lead Developer", bullets:["Built REST APIs","Event-driven microservices"]},
+    elevance: {title:"ELEVANCE HEALTH", role:"Solution Architect", bullets:["Designed WPF apps","Authored API contracts"]},
+    medtronic: {title:"MEDTRONIC ENGINEERING", role:"Senior Lead Developer", bullets:["Developed ASP.NET apps","Applied async programming"]},
+    cyient: {title:"CYIENT TECHNOLOGIES", role:"Senior Technical Lead", bullets:["Designed WinForms/WPF modules","Technical mentoring"]},
+    launchship: {title:"LAUNCHSHIP TECHNOLOGIES", role:"Senior Software Engineer", bullets:["Architected scalable web apps"]},
+    cognizant: {title:"COGNIZANT TECHNOLOGIES", role:"Associate Projects", bullets:["Implemented WCF services","Custom WPF controls"]},
+    technobrain: {title:"TECHNO BRAIN INDIA", role:"Senior Software Engineer", bullets:["Developed ASP.NET Web Forms"]},
+    bofa: {title:"BANK OF AMERICA", role:"Senior Software Engineer", bullets:["Worked on EPS apps","Authored complex stored procedures"]},
+    radix: {title:"RADIX LEARNING", role:"Software Engineer", bullets:["Built assessment tools","Implemented Java backend"]}
+  };
+
+  // Toggle Experiences list
+  expToggle.addEventListener("click", () => {
+    const expanded = expToggle.getAttribute("aria-expanded") === "true";
+    expToggle.setAttribute("aria-expanded", !expanded);
+    expList.style.maxHeight = expanded ? "0px" : expList.scrollHeight + "px";
+    sidebar.classList.toggle("interactive", !expanded);
+  });
+
+  // Select company and load content
+  document.querySelectorAll('.exp-item').forEach(item => {
+    item.addEventListener('click', (e)=>{
+      document.querySelectorAll('.exp-item').forEach(i=>i.classList.remove('active'));
+      item.classList.add('active');
+
+      const id = item.dataset.id;
+      const data = roleData[id];
+      if(!data) return;
+
+      const panel = document.getElementById('experiencePanel');
+      panel.querySelector('.company-title').textContent = data.title;
+      panel.querySelector('.company-role').textContent = data.role;
+
+      const bulletsUL = document.getElementById('experienceBullets');
+      bulletsUL.innerHTML = "";
+      data.bullets.forEach(b => {
+        const li = document.createElement('li');
+        li.textContent = "• " + b;
+        bulletsUL.appendChild(li);
+      });
+
+      // Scroll into view smoothly
+      document.getElementById('experience').scrollIntoView({behavior:'smooth', block:'start'});
+    });
+
+    // keyboard accessibility
+    item.tabIndex = 0;
+    item.addEventListener('keydown', e => {
+      if(e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        item.click();
+      }
+    });
+  });
+
+</script>
+
+</body>
+</html>
