@@ -138,18 +138,69 @@
   .bullets li { margin-bottom: 8px; color: #B0B0B0; }
 
   /* ===== Responsive ===== */
-  @media (max-width: 880px) {
-    .container { flex-direction: column; }
-    .sidebar { width: 100%; height: auto; position: relative; top: 0; padding: 12px; display: none; }
-    .sidebar.active { display: block; position: fixed; left: 0; top: 56px; width: 80%; height: calc(100vh - 56px); z-index: 1050; box-shadow: 0 6px 18px rgba(0,0,0,0.6); overflow-y: auto; }
-    .content { padding: 18px; }
-    #menuToggle { display: block; }
-  }
+  /* ===== Responsive ===== */
+@media (max-width: 880px) {
+    .container {
+        flex-direction: column;
+    }
 
-  @media (max-width: 520px) {
-    .topbar { padding: 10px; font-size: 1rem; }
-    .topbar .contact { font-size: 0.8rem; text-align: right; }
-  }
+    /* Sidebar hidden by default */
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        top: 0;
+        padding: 12px;
+        display: none; /* hidden until menu toggled */
+        flex-wrap: wrap;
+    }
+
+    /* Sidebar active / slide-in */
+    .sidebar.active {
+        display: block;
+        position: fixed;
+        left: 0;
+        top: 56px; /* below topbar */
+        width: 80%;
+        height: calc(100vh - 56px);
+        z-index: 1050;
+        background: linear-gradient(180deg, #073B4C, #005F73);
+        box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+        overflow-y: auto;
+        transition: transform 0.3s ease;
+    }
+
+    /* Content shifts below */
+    .content {
+        padding: 18px;
+    }
+
+    /* Hamburger / menu toggle button */
+    #menuToggle {
+        display: block;
+        position: absolute;
+        top: 12px;
+        left: 16px;
+        z-index: 1100;
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: #00BFA5;
+        background: transparent;
+        border: none;
+    }
+}
+
+@media (max-width: 520px) {
+    .topbar {
+        padding: 10px;
+        font-size: 1rem;
+    }
+    .topbar .contact {
+        font-size: 0.8rem;
+        text-align: right;
+    }
+}
+
 
   /* small utility */
   .muted { color: #B0B0B0; font-size: 0.9rem; }
@@ -165,7 +216,7 @@
   </div>
 </header>
 
-<button id="menuToggle">☰ Menu</button>
+<button id="menuToggle">☰ EXPLORE</button>
 
 <div class="container">
   <aside class="sidebar" id="sidebar">
