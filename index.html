@@ -146,13 +146,17 @@
 
     /* Sidebar hidden by default */
     .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-        top: 0;
+        position: fixed;
+        top: 56px; /* below topbar */
+        left: -100%; /* hide off-screen */
+        width: 80%;
+        height: calc(100vh - 56px);
+        background: linear-gradient(180deg, #073B4C, #005F73);
+        z-index: 1050;
         padding: 12px;
-        display: none; /* hidden until menu toggled */
-        flex-wrap: wrap;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+        overflow-y: auto;
+        transition: left 0.3s ease;
     }
 
     /* Sidebar active / slide-in */
