@@ -5,77 +5,128 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Srikanth Garimella - Portfolio</title>
   <style>
+    /* Basic Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
       line-height: 1.6;
-      background: #f4f4f9;
-      color: #333;
+      scroll-behavior: smooth;
     }
+
+    a { text-decoration: none; color: #0D6EFD; transition: color 0.3s; }
+    a:hover { color: #66b0ff; }
+
     header {
-      background: #222;
-      color: #fff;
-      padding: 2rem 1rem;
       text-align: center;
+      padding: 3rem 1rem;
+      background-color: #1e1e1e;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
     }
+
     header h1 {
-      margin: 0;
-      font-size: 2.5rem;
+      font-size: 2.8rem;
+      color: #0D6EFD;
+      margin-bottom: 0.5rem;
     }
+
     header p {
       font-size: 1.2rem;
-      margin-top: 0.5rem;
-      color: #ccc;
+      color: #b0b0b0;
     }
+
     nav {
-      background: #444;
       display: flex;
       justify-content: center;
-      padding: 0.5rem;
+      background-color: #1a1a1a;
+      padding: 0.8rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
+
     nav a {
-      color: #fff;
-      text-decoration: none;
-      margin: 0 1rem;
+      margin: 0 1.2rem;
       font-weight: bold;
+      color: #e0e0e0;
+      position: relative;
     }
-    nav a:hover {
-      text-decoration: underline;
+
+    nav a::after {
+      content: '';
+      display: block;
+      height: 2px;
+      background: #0D6EFD;
+      width: 0;
+      transition: width 0.3s;
+      position: absolute;
+      bottom: -4px;
+      left: 0;
     }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
     section {
       max-width: 900px;
       margin: auto;
-      padding: 2rem 1rem;
+      padding: 3rem 1rem;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1s ease;
     }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     h2 {
-      color: #222;
-      border-bottom: 2px solid #ddd;
+      color: #0D6EFD;
+      border-bottom: 2px solid #0D6EFD;
       padding-bottom: 0.3rem;
+      margin-bottom: 1rem;
+      display: inline-block;
     }
+
     .skills ul {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
+      gap: 0.6rem;
       list-style: none;
       padding: 0;
     }
+
     .skills li {
-      background: #0077cc;
+      background-color: #0D6EFD;
       color: #fff;
       padding: 0.5rem 1rem;
       border-radius: 20px;
       font-size: 0.9rem;
+      transition: transform 0.3s, background 0.3s;
+      cursor: default;
     }
+
+    .skills li:hover {
+      transform: scale(1.1);
+      background-color: #66b0ff;
+    }
+
     footer {
       text-align: center;
-      padding: 1rem;
-      background: #222;
-      color: #fff;
-      margin-top: 2rem;
+      padding: 1.5rem;
+      background-color: #1e1e1e;
+      color: #b0b0b0;
     }
-    footer a {
-      color: #00bcd4;
-      text-decoration: none;
+
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
     }
   </style>
 </head>
@@ -98,7 +149,7 @@
     <h2>About Me</h2>
     <p>
       I am a results-driven .NET Lead and Full Stack Developer with over 14 years of experience
-      in designing, developing, and deploying enterprise-scale applications. I have worked across
+      designing, developing, and deploying enterprise-scale applications. I have worked across
       diverse industries including healthcare, finance, and technology, leading teams and delivering
       high-quality solutions.
     </p>
@@ -111,7 +162,6 @@
     <p><strong>Elevance Health</strong> — Insurance Claim Processing System</p>
     <p><strong>Apollo Athene</strong> — Financial Clients Onboarding</p>
     <p><strong>Bank of America</strong> — Electronic Processing System</p>
-    <p><em>More details can be added here…</em></p>
   </section>
 
   <section id="skills" class="skills">
@@ -131,7 +181,7 @@
   <section id="projects">
     <h2>Projects & Achievements</h2>
     <ul>
-      <li>Led modernization of legacy systems to .NET Core at Carelon’s Flex Care Application.</li>
+      <li>Modernized legacy systems to .NET Core at Carelon’s Flex Care Application.</li>
       <li>Architected microservices for insurance claim processing at Elevance Health.</li>
       <li>Implemented OAuth2.0 and JWT authentication for enterprise applications.</li>
       <li>Optimized SQL queries and EF Core performance for high-volume systems.</li>
@@ -147,8 +197,23 @@
   </section>
 
   <footer>
-    <p>© 2025 Srikanth Garimella | Built with ❤️ using HTML & CSS</p>
+    <p>© 2025 Srikanth Garimella | Built with ❤️ using HTML, CSS & JS</p>
   </footer>
+
+  <script>
+    // Fade-in sections on scroll
+    const sections = document.querySelectorAll('section');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.2 });
+
+    sections.forEach(section => observer.observe(section));
+  </script>
 
 </body>
 </html>
