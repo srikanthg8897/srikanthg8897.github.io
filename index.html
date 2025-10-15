@@ -1,167 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Srikanth Garimella Portfolio</title>
-    <style>
-        /* ===== Reset & Base ===== */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #121212; color: #e0e0e0; line-height: 1.6; }
-        a { color: #1e90ff; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-        ul { list-style: none; }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Srikanth Garimella — Portfolio</title>
+  <style>
+    /* ===== Reset & Base ===== */
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background:#121212;color:#e0e0e0;line-height:1.5;
+      -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+    }
+    a{color:#1e90ff;text-decoration:none}
+    a:hover{text-decoration:underline}
+    ul{list-style:none}
 
-        /* ===== Top Bar ===== */
-        .topbar {
-            position: sticky;
-            top: 0;
-            background-color: #ebe2e2;
-            color: #1248dc; /* Dark Blue */
-            font-weight: bold;
-            padding: 15px 20px;
-            font-size: 1.8em;
-            z-index: 1000;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-        }
+    /* ===== Top Bar ===== */
+    .topbar{
+      position:sticky;top:0;z-index:1000;
+      background:#000;color:#fff;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.04);
+      box-shadow:0 2px 6px rgba(0,0,0,0.6);
+    }
+    .topbar .name{
+      color:#0D3A8A; /* dark blue highlight */
+      font-weight:700;font-size:1.25rem;
+    }
+    .topbar .contact{
+      text-align:right;font-size:0.9rem;color:#cfcfcf;
+    }
+    .topbar .contact .email{display:block}
+    .topbar .contact .phone{display:block;font-size:0.85rem;color:#9aa6ff}
 
-        /* ===== Layout ===== */
-        .container { display: flex; min-height: 100vh; }
-        .sidebar {
-            width: 250px;
-            background-color: #1f1f1f;
-            padding: 20px;
-            position: sticky;
-            top: 60px; /* height of topbar */
-            height: calc(100vh - 60px);
-            overflow-y: auto;
-        }
-        .sidebar h2 { margin-bottom: 20px; color: #1e90ff; text-align: center; }
-        .sidebar nav a, .sidebar nav button {
-            display: block;
-            width: 100%;
-            margin: 5px 0;
-            padding: 8px;
-            border-radius: 5px;
-            background: none;
-            border: none;
-            color: #e0e0e0;
-            text-align: left;
-            cursor: pointer;
-            font-size: 0.95em;
-        }
-        .sidebar nav a:hover, .sidebar nav button:hover { background-color: #272727; }
+    /* ===== Layout ===== */
+    .container{display:flex;min-height:calc(100vh - 56px)} /* 56px approx topbar */
+    /* Sidebar default collapsed width */
+    .sidebar{
+      width:250px; background:#1f1f1f; padding:18px;
+      position:sticky; top:56px; height:calc(100vh - 56px); overflow:auto;
+      transition:width 280ms ease, box-shadow 280ms ease;
+      box-shadow:inset -1px 0 0 rgba(255,255,255,0.02);
+    }
+    /* Expand while hovering */
+    .sidebar:hover{ width:360px; box-shadow: 0 6px 18px rgba(0,0,0,0.6); }
 
-        .content { flex: 1; padding: 40px; overflow-y: auto; }
+    /* Expand while interacting (JS toggles .interactive) */
+    .sidebar.interactive{ width:360px; box-shadow: 0 6px 18px rgba(0,0,0,0.6); }
 
-        /* ===== Sections ===== */
-        section { margin-bottom: 50px; }
-        h1, h2, h3 { color: #1e90ff; margin-bottom: 15px; }
-        h1 { font-size: 2.2em; }
-        h2 { font-size: 1.6em; }
-        h3 { font-size: 1.3em; margin-top: 20px; }
-        p { margin-bottom: 10px; }
+    .sidebar h2{ color:#1e90ff; font-size:1.1rem; text-align:center; margin-bottom:12px; }
+    nav{ display:block; }
+    .nav-link, .exp-toggle, .company-btn{
+      display:flex; align-items:center; justify-content:flex-start;
+      width:100%; padding:9px 10px; border-radius:6px; margin-bottom:6px;
+      background:transparent; border:0; color: #e6e6e6; cursor:pointer;
+      transition:background 180ms, transform 120ms;
+      text-align:left; font-size:0.95rem;
+    }
+    .nav-link:hover, .exp-toggle:hover, .company-btn:hover { background:#272727; transform:translateY(-1px); }
 
-        .contact { margin: 10px 0 20px 0; font-size: 0.95em; color: #aaaaaa; }
-        .experience-detail { background-color: #1a1a1a; padding: 15px; border-radius: 8px; margin-bottom: 10px; display: none; }
+    .exp-toggle { font-weight:700; color:#fff; display:flex; justify-content:space-between; align-items:center; }
+    .exp-toggle .caret { font-size:0.85rem; opacity:0.85; transform:rotate(0deg); transition: transform 200ms; }
+    .exp-toggle[aria-expanded="true"] .caret { transform:rotate(90deg); }
 
-        /* Smooth Scroll */
-        html { scroll-behavior: smooth; }
+    /* Experience sub-list */
+    .exp-list{ margin-left:6px; padding-left:6px; border-left:1px dashed rgba(255,255,255,0.03); margin-top:8px; }
+    .exp-item{ padding:8px 10px; margin-bottom:6px; border-radius:6px; cursor:pointer; background:transparent; color:#e6e6e6; text-align:left; transition: background 160ms; }
+    .exp-item:hover{ background:#2b2b2b; }
+    .exp-item.active{ background:#0D3A8A; color:#fff; font-weight:600; }
 
-        /* Expand/Collapse Animation */
-        .collapse { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
-        .collapse.show { max-height: 1000px; transition: max-height 0.6s ease; }
-    </style>
-</head>
-<body>
+    /* Content area */
+    .content{ flex:1; padding:28px 36px; overflow:auto; min-width:0; }
+    section{ margin-bottom:38px; }
+    h1,h2,h3{ color:#1e90ff; margin-bottom:12px; }
+    h1{ font-size:2rem }
+    .contact-line{ color:#aaaaaa; margin-bottom:12px }
 
-    <!-- Top Bar -->
-    <div class="topbar">Srikanth Garimella</div>
+    /* Experience panel content */
+    .experience-panel{ background:#151515; border:1px solid rgba(255,255,255,0.03); padding:18px; border-radius:10px; }
+    .company-title{ color:#0D3A8A; font-weight:700; font-size:1.05rem; margin-bottom:8px; }
+    .company-role{ color:#dcdcdc; font-weight:600; margin-bottom:10px; font-size:0.98rem }
+    .bullets{ margin-left:16px; margin-top:8px; }
+    .bullets li{ margin-bottom:8px; color:#d1d1d1; }
 
-    <div class="container">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <h2>Menu</h2>
-            <nav>
-                <a href="#about">About Me</a>
-                <button onclick="toggleCollapse('exp-carel')">Experiences</button>
-                <div id="exp-carel" class="collapse">
-                    <ul>
-                        <li>CARELON BEHAVIORAL HEALTH_SENIOR LEAD DEVELOPER</li>
-                        <li>APOLLO ATHENE_SENIOR LEAD DEVELOPER</li>
-                        <li>ELEVANCE HEALTH_SOLUTION ARCHITECT</li> 
-                        <li>MEDTRONIC ENGINEERING AND INNOVATION CENTER_SENIOR SOFTWARE ENGINEER</li> 
-                        <li>CYIENT TECHNOLOGIES _SENIOR TECHNICAL LEAD</li> 
-                        <li>LAUNCHSHIP TECHNOLOGIES _SENIOR SOFTWARE ENGINEER</li> 
-                        <li>COGNIZANT TECHNOLOGIES INDIA PVT LTD_ASSOCIATE PROJECTS</li> 
-                        <li>TECHNO BRAIN INDIA PVT LTD_SENIOR SOFTWARE ENGINEER</li> 
-                        <li>BANK OF AMERICA (BA CONTINUUM INDIA PVT LTD)_SENIOR SOFTWARE ENGINEER</li>
-                        <li>RADIX LEARNING PVT_SOFTWARE ENGINEER</li>
-                    </ul>
-                </div>
-
-               
-
-                <a href="#education">Education</a>
-                <a href="#certifications">Certifications</a>
-                <a href="#portfolio">Portfolio/Links</a>
-            </nav>
-        </div>
-
-        <!-- Main Content -->
-        <div class="content">
-            <!-- About Me -->
-            <section id="about">
-                <h1>About Me</h1>
-                <p class="contact">Garimella.Srikanth88@gmail.com | +1-732-642-7879</p>
-                <p>
-                    I am a seasoned software professional with over 14 years of experience in full-stack development, architecture, and leadership. 
-                    I have successfully led cross-functional teams, managed complex projects, and delivered high-quality software solutions across multiple industries including healthcare, finance, and enterprise software. 
-                    My expertise spans backend development with .NET technologies, frontend development with HTML, CSS, JavaScript, and modern frameworks like ReactJS and Blazor. 
-                    I am passionate about scalable software design, microservices architecture, cloud deployments, CI/CD automation, and integrating Generative AI to optimize solutions. 
-                    I thrive on mentoring teams, driving modernization initiatives, and delivering tangible business value through technology innovation.
-                </p>
-            </section>
-
-            <!-- Experience Section -->
-            <section id="experience">
-                <h2>Experience</h2>
-                <p>Use the left menu to explore details for each company.</p>
-            </section>
-
-            <!-- Education -->
-            <section id="education">
-                <h2>Education</h2>
-                <p><strong>International Institute of Information Technology | Bengaluru, India</strong> – Post Graduate Diploma in IT (08/2010)</p>
-                <p><strong>JNTU | Hyderabad, India</strong> – Bachelor of Engineering in ECE (04/2009)</p>
-            </section>
-
-            <!-- Certifications -->
-            <section id="certifications">
-                <h2>Certifications</h2>
-                <p>Generative AI Foundations Certificate Program – upGrad & Microsoft (August 2025)</p>
-                <p>ITIL@2011, Silver Award (2012), Bronze Award (2019), Appreciation (2020), Promotion to Lead Developer (2022)</p>
-            </section>
-
-            <!-- Portfolio / Links -->
-            <section id="portfolio">
-                <h2>Portfolio & Profiles</h2>
-                <ul>
-                    <li><a href="https://www.linkedin.com/in/srikanth-garimella-6b0b372b/" target="_blank">LinkedIn</a></li>
-                    <li>Email: Garimella.Srikanth88@gmail.com</li>
-                    <li>Phone: +1-732-642-7879</li>
-                </ul>
-            </section>
-        </div>
-    </div>
-
-    <script>
-        // Function to expand/collapse experience details
-        function toggleCollapse(id) {
-            const el = document.getElementById(id);
-            el.classList.toggle('show');
-        }
-    </script>
-</body>
-</html>
+    /* Responsive: collapse sidebar into top menu on narrow screens */
+    @media (max-width:880px){
+      .container{ flex-direction:column; }
+      .sidebar{ width:
