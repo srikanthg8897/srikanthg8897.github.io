@@ -16,6 +16,12 @@
   a { color: #00BFA5; text-decoration: none; } /* teal links */
   a:hover { text-decoration: underline; }
   ul { list-style: none; }
+  
+  .email {
+  text-decoration: underline;
+  color: #00BFA5; /* teal */
+  font-weight: 500;
+}
 
   /* ===== Top Bar ===== */
   .topbar {
@@ -29,8 +35,8 @@
   }
   .topbar .name {
     color: #00BFA5; /* teal highlight */
-    font-weight: 700;
-    font-size: 1.5rem;
+    font-weight: 900;
+    font-size: 2.5rem;
   }
   .topbar .contact {
     display: flex;
@@ -63,7 +69,7 @@
     box-shadow: inset -1px 0 0 rgba(255,255,255,0.02);
   }
   .sidebar:hover,
-  .sidebar.interactive { width: 360px; box-shadow: 0 6px 18px rgba(0,0,0,0.6); }
+  .sidebar.interactive { width: 320px; box-shadow: 0 6px 18px rgba(0,0,0,0.6); }
 
   .sidebar h2 {
     color: #00BFA5;
@@ -107,6 +113,12 @@
   h1,h2,h3 { color: #00BFA5; margin-bottom: 12px; }
   h1 { font-size: 2rem; }
   .contact-line { color: #C0C0C0; margin-bottom: 12px; }
+  .section-title {
+    border-bottom: 2px solid #00BFA5;
+    padding-bottom: 6px;
+    margin-bottom: 12px;
+}
+
 
   /* ===== Experience panel ===== */
   .experience-panel {
@@ -115,7 +127,7 @@
     padding: 18px; border-radius: 10px;
   }
   .company-title { color: #A8DADC; font-weight: 700; font-size: 1.05rem; margin-bottom: 8px; }
-  .company-role { color: #99f07f; font-weight: 900; margin-bottom: 10px; font-size: 0.98rem; }
+  .company-role { color: #99f07f; font-weight: 900; margin-bottom: 10px; font-size: 0.100rem; }
   .bullets { margin-left: 16px; margin-top: 8px; }
   .bullets li { margin-bottom: 8px; color: #B0B0B0; }
 
@@ -150,9 +162,10 @@
 
 <div class="container">
   <aside class="sidebar" id="sidebar">
-    <h2>Menu</h2>
+    <h2>Explore</h2>
     <nav>
       <a class="nav-link" href="#about">About Me</a>
+      <a class="nav-link" href="#summary">Professional Summary</a>
 
       <button class="exp-toggle" id="expToggle" aria-expanded="false">
         <span>Experiences</span>
@@ -180,12 +193,104 @@
 
   <main class="content" id="mainContent">
     <section id="about" style="text-align: justify;">
-      <h1>About Me</h1>
-            <p>I am a seasoned software professional with over 14+ years of experience in full-stack development.Firsthand experience in leading cross-functional Agile teams of 4–6 developers, conducting code reviews, and ensuring adherence to SOLID principles.Functioned as a single point of contact for clients, managing onshore/offshore coordination and project briefings.Adept at stakeholder communication, incident resolution, defect fixes, and root cause analysis, ensuring high availability and performance of critical systems.Defined technical strategy for migrating legacy .NET Framework applications to .NET 7/8 with minimal business disruption.</p>
+      <h1 class="section-title">About Me</h1>
+	  <div  class="experience-panel">
+            <p>I am a seasoned software professional with over 14+ years of experience in full-stack development.Firsthand experience in leading cross-functional Agile teams of 4 to 6 developers, conducting code reviews, and ensuring adherence to SOLID principles.Functioned as a single point of contact for clients, managing onshore/offshore coordination and project briefings.Adept at stakeholder communication, incident resolution, defect fixes, and root cause analysis, ensuring high availability and performance of critical systems.Defined technical strategy for migrating legacy .NET Framework applications to .NET 7/8 with minimal business disruption.</p>
+	 </div>
     </section>
 
+
+	<section id="summary" style="text-align: justify;">
+  <h1 class="section-title">Professional Summary</h1>
+
+  <div class="experience-panel">
+
+    <!-- Overall Experience & Leadership -->
+    <div style="margin-bottom:18px;">
+      <h3 style="color:#00BFA5; margin-bottom:8px;">✅ Overall Experience & Leadership</h3>
+      <ul style="margin-left:20px; color:#C0C0C0;text-align: justify;">
+        <li>14+ years of strong experience in software development across full SDLC – analysis, design, development, testing, implementation, and support.</li>
+        <li>Led cross-functional Agile teams of 4–6 developers, conducted code reviews, ensured SOLID principles.</li>
+        <li>Single point of contact for clients, managing onshore/offshore coordination and project briefings.</li>
+        <li>Adept at stakeholder communication, incident resolution, defect fixes, and root cause analysis.</li>
+        <li>Defined technical strategy for migrating legacy .NET Framework applications to .NET 7/8 with minimal disruption.</li>
+      </ul>
+    </div>
+
+    <!-- Backend & .NET Technologies -->
+    <div style="margin-bottom:18px;">
+      <h3 style="color:#00BFA5; margin-bottom:8px;">🖥 Backend Development & .NET Technologies</h3>
+      <ul style="margin-left:20px; color:#C0C0C0;text-align: justify;">
+        <li>Proficient in C# (.NET Framework/.NET Core 8), VB.NET, Python.</li>
+        <li>Developed WinForms, WPF (XAML/MVVM), ASP.NET MVC, Web Forms, Web API.</li>
+        <li>Experience with WCF services (SOAP/REST) and modern alternatives like ASP.NET Core Web API.</li>
+        <li>Entity Framework (EF Core 6) using both Database-First and Code-First approaches.</li>
+        <li>Implemented Repository and Unit of Work patterns for clean separation of concerns.</li>
+      </ul>
+    </div>
+
+    <!-- Microservices & Architecture -->
+    <div style="margin-bottom:18px;">
+      <h3 style="color:#00BFA5; margin-bottom:8px;">⚙️ Microservices & Architecture</h3>
+      <ul style="margin-left:20px; color:#C0C0C0;">
+        <li>Designed scalable microservices using ASP.NET Core, Docker, Kubernetes, Kafka.</li>
+        <li>Secured APIs with OAuth2.0, JWT tokens, and API key management.</li>
+        <li>Created sequence diagrams, architecture diagrams, and API documentation for large-scale modernization projects.</li>
+      </ul>
+    </div>
+
+    <!-- Database & ETL -->
+    <div style="margin-bottom:18px;">
+      <h3 style="color:#00BFA5; margin-bottom:8px;">🛠 Database Development & ETL</h3>
+      <ul style="margin-left:20px; color:#C0C0C0;">
+        <li>Expertise in MS SQL Server, complex queries, stored procedures, triggers, views, joins.</li>
+        <li>Database normalization, schema design, indexing, performance tuning, replication.</li>
+      </ul>
+    </div>
+
+    <!-- Front-End -->
+    <div style="margin-bottom:18px;">
+      <h3 style="color:#00BFA5; margin-bottom:8px;">🎯 Front-End Development</h3>
+      <ul style="margin-left:20px; color:#C0C0C0;">
+        <li>Proficient in HTML5, CSS3, JavaScript, Razor Views (.NET MVC / Blazor).</li>
+        <li>Familiar with ReactJS and front-end integration with APIs.</li>
+      </ul>
+    </div>
+
+    <!-- Security & Compliance -->
+    <div style="margin-bottom:18px;">
+      <h3 style="color:#00BFA5; margin-bottom:8px;">🔐 Security & Compliance</h3>
+      <ul style="margin-left:20px; color:#C0C0C0;">
+        <li>Implemented best practices to prevent SQL Injection, XSS.</li>
+        <li>Built secure financial systems with token vault integration, payment gateway APIs, fraud detection logic.</li>
+      </ul>
+    </div>
+
+    <!-- Cloud & DevOps -->
+    <div style="margin-bottom:18px;">
+      <h3 style="color:#00BFA5; margin-bottom:8px;">☁️ Cloud & CI/CD</h3>
+      <ul style="margin-left:20px; color:#C0C0C0;">
+        <li>Proficient in Azure App Services, Azure Kubernetes Service (AKS), and containerized microservices.</li>
+        <li>CI/CD pipeline automation with Azure DevOps, Jenkins, Git.</li>
+        <li>Integrated Azure App Insights for telemetry and performance monitoring.</li>
+      </ul>
+    </div>
+
+    <!-- AI & Generative -->
+    <div>
+      <h3 style="color:#00BFA5; margin-bottom:8px;">✅ Generative AI Integration</h3>
+      <ul style="margin-left:20px; color:#C0C0C0;">
+        <li>Certified practitioner leveraging GenAI for code optimization, technical documentation, and automated solution design across .NET and cloud ecosystems.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+	
+	
     <section id="experience">
-      <h2>Experience</h2>
+      <h2 class="section-title">Experience</h2>
       <div class="experience-panel" id="experiencePanel">
         <div class="company-title">Select a company from the left to view role details</div>
         <div class="company-role muted">Click any experience to load details.</div>
@@ -198,8 +303,8 @@
 	
       <!-- Education -->
       <section id="education" aria-labelledby="education-heading">
-        <h2 id="education-heading">Education</h2>
-        <div style="background:#151515;padding:14px;border-radius:8px"> 
+        <h2 id="education-heading" class="section-title">Education</h2>
+        <div  class="experience-panel" > 
           <p><strong>INTERNATIONAL INSTITUTE OF INFORMATION TECHNOLOGY_BANGALORE-INDIA—Post Graduate Diploma in Information Technology</strong><br/><small>08/2010 — Bengaluru, India</small></p>
           <p style="margin-top:8px"><strong>JNTU-HYDERABAD-INDIA Sri Indu College of Engineering & Technology (ECE)</strong><br/><small>04/2009 — Hyderabad, India</small></p>
         </div>
@@ -207,8 +312,8 @@
 
       <!-- Certifications -->
       <section id="certifications" aria-labelledby="certifications-heading">
-        <h2 id="certifications-heading">Certifications & Achievements</h2>
-        <div style="background:#151515;padding:14px;border-radius:8px">
+        <h2 id="certifications-heading" class="section-title">Certifications & Achievements</h2>
+        <div  class="experience-panel">
           <p>Generative AI Foundations — upGrad & Microsoft (August 2025)</p>
           <p>ITIL 2011, Silver Award (2012), Bronze Award (2019), Appreciation (2020), Promoted to Lead Developer (2022)</p>
         </div>
@@ -216,11 +321,13 @@
 
       <!-- Portfolio / Links -->
       <section id="portfolio" aria-labelledby="portfolio-heading">
-        <h2 id="portfolio-heading">Portfolio & Profiles</h2>
-        <div style="background:#151515;padding:14px;border-radius:8px">
+        <h2 id="portfolio-heading" class="section-title">Portfolio & Profiles</h2>
+        <div class="experience-panel">
           <ul>
             <li><a href="https://www.linkedin.com/in/srikanth-garimella-6b0b372b/" target="_blank" rel="noopener">LinkedIn</a></li>
-            <li>Email: Garimella.Srikanth88@gmail.com</li>
+            <li>
+					Email: <span class="email">Garimella.Srikanth88@gmail.com</span>
+			</li>
             <li>Phone: +1-732-642-7879</li>
           </ul>
         </div>
